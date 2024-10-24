@@ -1,5 +1,5 @@
 # Change baseurl before deploy
-baseurl = ""
+baseurl = "https://learngraphics.io/"
 languageCode = "en-us"
 title = "Learn graphics"
 
