@@ -1,7 +1,7 @@
 ---
-title: Data Structure
+title: 자료구조
 date: 2024-10-26
-description: Learn about what data structures are.
+description: 자료구조가 무엇인지 학습합니다.
 categories:
   - data structure
 tags: 
