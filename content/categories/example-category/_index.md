@@ -1,10 +1,10 @@
 ---
-title: Example Category
-description: A description of this category
+title: Algorithm
+description: A collection of structured methods and techniques for solving problems in computer science and beyond.
 image:
 
 # Badge style
 style:
-    background: "#2a9d8f"
+    background: "#1F77B4"
     color: "#fff"
 ---
