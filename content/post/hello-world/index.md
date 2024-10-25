@@ -2,7 +2,7 @@
 title: 자료구조
 description: 자료구조가 무엇인지 학습합니다.
 slug: data-structure-intro
-date: 2024-10-26 00:00:00+0000
+date: 2024-10-25 00:00:00+0000
 image: cover.jpg
 categories:
     - data structure
