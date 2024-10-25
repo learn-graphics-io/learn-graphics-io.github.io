@@ -1,20 +1,15 @@
 ---
-title: Hello World
-description: Welcome to Hugo Theme Stack
-slug: hello-world
-date: 2022-03-06 00:00:00+0000
+title: 자료구조
+description: 자료구조가 무엇인지 학습합니다.
+slug: data-structure-intro
+date: 2024-10-26 00:00:00+0000
 image: cover.jpg
 categories:
-    - Example Category
+    - data structure
 tags:
-    - Example Tag
-weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+    - theory
+    - computer science
+weight: 1
 ---
 
-Welcome to Hugo theme Stack. This is your first post. Edit or delete it, then start writing!
-
-For more information about this theme, check the documentation: https://stack.jimmycai.com/
-
-Want a site like this? Check out [hugo-theme-stack-stater](https://github.com/CaiJimmy/hugo-theme-stack-starter)
-
-> Photo by [Pawel Czerwinski](https://unsplash.com/@pawel_czerwinski) on [Unsplash](https://unsplash.com/)
+시작하기에 앞서 우리는 C++ 언어를 사용하여 모든 아티클의 예제를 구현합니다. C++ 언어에 대한 기본적인 지식이 있다면 해당 자료를 이해하는데 도움이 될 것입니다.
