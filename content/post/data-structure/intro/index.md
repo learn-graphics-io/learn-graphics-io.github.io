@@ -109,4 +109,4 @@ int main() {
 vec는 선언된 코드 블록을 벗어나는 위치에서 스택으로부터 제거되지만, 동적으로 할당한 힙의 공간은 여전히 남아있게 됩니다. 그것이 바로 메모리 누수입니다.
 이러한 메모리 누수를 방지하려면 2번과 같이 동적으로 할당한 메모리를 해제하야 합니다.
 
-> [다음글: 리스트(List) 자료구조](https://learngraphics.io/p/data-structure-list/)
+> [다음글: 자료구조: 링크드 리스트](https://learngraphics.io/p/data-structure-linkedlist/)
