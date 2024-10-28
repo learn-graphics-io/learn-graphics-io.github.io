@@ -4,7 +4,7 @@ description: 리스트(List) 형식의 자료구조를 학습합니다
 slug: data-structure-linkedlist
 date: 2024-10-26
 categories:
-  - data structure
+  - data_structure
 tags: 
   - theory
   - computer science
