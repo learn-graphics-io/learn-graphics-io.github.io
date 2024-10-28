@@ -265,7 +265,7 @@ public:
 }
 ```
 
-### 정리
+## 정리
 구현한 모든 기능을 합하여 실행해 볼 수 있습니다. 다음 코드를 다운로드 하여 직접 실행해 봅시다.
 - [LinkedList.h](./LinkedList.h)
 - [LinkedList.cpp](./LinkedList.cpp)
@@ -273,4 +273,5 @@ public:
 
 
 > [이전글: 자료구조](https://learngraphics.io/p/data-structure-intro/)
+  
 > [다음글: 자료구조: 더블 링크드 리스트](https://learngraphics.io/p/data-structure-double-linkedlist/)
