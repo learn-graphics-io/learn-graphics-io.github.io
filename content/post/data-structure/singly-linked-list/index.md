@@ -1,7 +1,7 @@
 ---
 title: 단방향 링크드 리스트
 description: 자료구조의 기초 이론을 학습합니다
-slug: data-structure-array
+slug: data-structure-singly-linked-list
 date: 2024-10-28
 categories:
   - data_structure
