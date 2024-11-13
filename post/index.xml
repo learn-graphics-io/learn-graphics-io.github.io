@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Lede Studios</title><link>https://learngraphics.io/post/</link><description>Recent content in Posts on Lede Studios</description><generator>Hugo -- gohugo.io</generator><language>ko</language><lastBuildDate>Mon, 28 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://learngraphics.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>단방향 링크드 리스트</title><link>https://learngraphics.io/p/data-structure-singly-linked-list/</link><pubDate>Mon, 28 Oct 2024 00:00:00 +0000</pubDate><guid>https://learngraphics.io/p/data-structure-singly-linked-list/</guid><description>&lt;h1 id="링크드-리스트와-단방향-링크드-리스트">링크드 리스트와 단방향 링크드 리스트
+&lt;/h1>&lt;p>링크드 리스트(Linked List)는 데이터가 노드(Node) 단위로 연결된 자료구조로, 각 노드가 다음 노드의 주소를 저장하여 연속적인 데이터를 관리하는 방식이다. 배열과는 달리, 링크드 리스트는 동적 메모리 할당을 통해 크기가 고정되지 않고 필요에 따라 조정할 수 있어 유연한 데이터 구조로 평가된다. 특히, 데이터의 삽입과 삭제가 빈번한 경우 유리하게 사용할 수 있다.&lt;/p>
+&lt;p>이번 섹션에서는 링크드 리스트와 그 중에서도 단방향 링크드 리스트(Singly Linked List)의 개념, 구조, 그리고 주요 특징을 상세히 설명한다.&lt;/p>
+&lt;hr>
+&lt;h3 id="링크드-리스트linked-list의-개념">링크드 리스트(Linked List)의 개념
+&lt;/h3>&lt;p>링크드 리스트는 &lt;strong>각 노드가 서로 연결&lt;/strong>된 형태의 자료구조로, 각 노드는 데이터를 저장하는 &lt;strong>데이터 필드&lt;/strong>와 다음 노드를 가리키는 &lt;strong>포인터 필드&lt;/strong>로 구성된다. 이때, 각 노드는 다음 노드를 가리키는 방식으로 서로 연결되며, 링크드 리스트의 시작점은 **헤드\(Head\)**라는 첫 번째 노드로 관리된다.&lt;/p>
+&lt;p>링크드 리스트는 메모리 상에서 &lt;strong>비연속적으로&lt;/strong> 배치될 수 있다. 즉, 각 노드는 메모리의 어디에 위치해도 상관없으며, 노드 간 연결이 주소를 통해 이루어지기 때문에 자유로운 메모리 할당과 해제가 가능하다.&lt;/p>
+&lt;h4 id="링크드-리스트의-주요-특징">링크드 리스트의 주요 특징
+&lt;/h4>&lt;ol>
+&lt;li>&lt;strong>동적 크기 조정&lt;/strong>: 링크드 리스트는 필요에 따라 노드를 추가하거나 제거할 수 있어 크기가 고정되지 않는다.&lt;/li>
+&lt;li>&lt;strong>비연속적 메모리 할당&lt;/strong>: 각 노드가 독립적으로 메모리 공간을 차지하며, 메모리 상에서 인접해 있을 필요가 없다.&lt;/li>
+&lt;li>&lt;strong>삽입과 삭제의 용이성&lt;/strong>: 배열과 달리 중간에 요소를 삽입하거나 삭제할 때 데이터의 이동이 필요하지 않다.&lt;/li>
+&lt;li>&lt;strong>탐색 속도&lt;/strong>: 링크드 리스트는 원하는 위치의 데이터를 찾기 위해 처음부터 순차적으로 접근해야 하므로, 배열에 비해 탐색 속도가 느릴 수 있다.&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h3 id="단방향-링크드-리스트singly-linked-list란">단방향 링크드 리스트(Singly Linked List)란?
+&lt;/h3>&lt;p>단방향 링크드 리스트는 링크드 리스트의 한 유형으로, &lt;strong>한 방향&lt;/strong>으로만 탐색이 가능한 자료구조이다. 각 노드에는 다음 노드의 주소를 저장하는 포인터가 포함되어 있으며, 이전 노드의 주소는 저장되지 않는다. 즉, 단방향 링크드 리스트는 첫 번째 노드에서 시작하여 마지막 노드까지 &lt;strong>단방향으로만 이동&lt;/strong>할 수 있는 구조를 가진다.&lt;/p>
+&lt;h4 id="단방향-링크드-리스트의-구성-요소">단방향 링크드 리스트의 구성 요소
+&lt;/h4>&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>노드\(Node\)&lt;/strong>: 단방향 링크드 리스트의 기본 단위로, 각 노드는 데이터를 저장하는 &lt;code>데이터 필드(data)&lt;/code>와 다음 노드를 가리키는 &lt;code>포인터 필드(next)&lt;/code>를 포함한다.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>데이터 필드&lt;/strong>: 노드에 저장할 실제 데이터 값이다.&lt;/li>
+&lt;li>&lt;strong>포인터 필드\(next\)&lt;/strong>: 다음 노드의 주소를 저장하는 포인터로, 이 포인터를 통해 다음 노드로 이동할 수 있다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>헤드\(Head\)&lt;/strong>: 리스트의 첫 번째 노드를 가리키는 포인터이다. 단방향 링크드 리스트에서 리스트의 시작점을 나타내며, 리스트 탐색 및 노드 추가/삭제의 기준이 된다.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h4 id="단방향-링크드-리스트의-주요-특징">단방향 링크드 리스트의 주요 특징
+&lt;/h4>&lt;ul>
+&lt;li>&lt;strong>단방향 연결&lt;/strong>: 단방향 링크드 리스트는 한 방향으로만 탐색할 수 있다. 이전 노드로 이동하는 것은 불가능하며, 항상 다음 노드로만 이동 가능하다.&lt;/li>
+&lt;li>&lt;strong>끝 노드\(Tail Node\)&lt;/strong>: 단방향 링크드 리스트의 끝 노드는 &lt;code>next&lt;/code> 포인터가 &lt;code>nullptr&lt;/code>을 가리키며, 리스트의 끝을 나타낸다.&lt;/li>
+&lt;li>&lt;strong>탐색의 제한&lt;/strong>: 노드가 한 방향으로만 연결되므로, 리스트의 특정 위치에 접근하려면 처음 노드부터 순차적으로 이동해야 한다.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="3-단방향-링크드-리스트의-주요-연산">3. 단방향 링크드 리스트의 주요 연산
+&lt;/h3>&lt;p>단방향 링크드 리스트는 다음과 같은 연산을 통해 노드의 삽입, 삭제, 탐색을 수행할 수 있다.&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>노드 삽입&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>리스트 시작에 삽입&lt;/strong>: 새로운 노드를 리스트의 첫 번째 위치(헤드)로 삽입한다.&lt;/li>
+&lt;li>&lt;strong>리스트 끝에 삽입&lt;/strong>: 새로운 노드를 리스트의 마지막에 추가한다.&lt;/li>
+&lt;li>&lt;strong>특정 위치에 삽입&lt;/strong>: 특정 위치에 새로운 노드를 삽입하기 위해 해당 위치까지 순차적으로 탐색한 후 삽입한다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>노드 삭제&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>리스트 시작에서 삭제&lt;/strong>: 첫 번째 노드(헤드)를 삭제하고, 두 번째 노드를 새로운 헤드로 만든다.&lt;/li>
+&lt;li>&lt;strong>리스트 끝에서 삭제&lt;/strong>: 마지막 노드를 제거하기 위해 리스트 끝까지 탐색한 후 삭제한다.&lt;/li>
+&lt;li>&lt;strong>특정 위치의 노드 삭제&lt;/strong>: 특정 위치의 노드를 삭제하기 위해 해당 위치까지 이동하여 노드를 제거한다.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>노드 탐색&lt;/strong>: 단방향 링크드 리스트는 특정 값을 가진 노드를 찾기 위해 &lt;strong>헤드부터 순차적으로&lt;/strong> 탐색해야 한다. 이 과정은 리스트 길이에 따라 비례하므로, 최악의 경우 **O\(n\)**의 시간 복잡도를 가진다.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h3 id="단방향-링크드-리스트의-장점과-단점">단방향 링크드 리스트의 장점과 단점
+&lt;/h3>&lt;h4 id="장점">장점
+&lt;/h4>&lt;ol>
+&lt;li>&lt;strong>동적 메모리 할당&lt;/strong>: 메모리를 미리 예약하지 않고 필요한 시점에 동적으로 할당하므로 메모리 사용이 유연하다.&lt;/li>
+&lt;li>&lt;strong>삽입 및 삭제의 용이성&lt;/strong>: 배열과 달리 노드의 삽입/삭제 시 메모리 재배치가 필요하지 않아 빠르게 수행할 수 있다.&lt;/li>
+&lt;li>&lt;strong>메모리 절약&lt;/strong>: 필요한 시점에만 메모리를 할당하고, 사용하지 않는 노드는 제거하여 메모리 낭비를 줄일 수 있다.&lt;/li>
+&lt;/ol>
+&lt;h4 id="단점">단점
+&lt;/h4>&lt;ol>
+&lt;li>&lt;strong>느린 탐색 속도&lt;/strong>: 단방향 연결 구조로 인해 특정 요소에 접근하려면 처음부터 순차적으로 탐색해야 한다.&lt;/li>
+&lt;li>&lt;strong>추가 메모리 사용&lt;/strong>: 각 노드가 데이터 외에 포인터 필드를 포함하므로 배열에 비해 추가적인 메모리 공간이 필요하다.&lt;/li>
+&lt;li>&lt;strong>역방향 탐색 불가&lt;/strong>: 단방향 링크드 리스트는 한 방향으로만 탐색할 수 있어, 역방향 탐색이 불가능하다.&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h3 id="단방향-링크드-리스트의-예제-구현-c">단방향 링크드 리스트의 예제 구현 (C++)
+&lt;/h3>&lt;p>다음은 C++로 단방향 링크드 리스트를 구현한 코드로, 리스트의 노드 삽입, 삭제, 탐색 기능을 포함한다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;span class="lnt">129
+&lt;/span>&lt;span class="lnt">130
+&lt;/span>&lt;span class="lnt">131
+&lt;/span>&lt;span class="lnt">132
+&lt;/span>&lt;span class="lnt">133
+&lt;/span>&lt;span class="lnt">134
+&lt;/span>&lt;span class="lnt">135
+&lt;/span>&lt;span class="lnt">136
+&lt;/span>&lt;span class="lnt">137
+&lt;/span>&lt;span class="lnt">138
+&lt;/span>&lt;span class="lnt">139
+&lt;/span>&lt;span class="lnt">140
+&lt;/span>&lt;span class="lnt">141
+&lt;/span>&lt;span class="lnt">142
+&lt;/span>&lt;span class="lnt">143
+&lt;/span>&lt;span class="lnt">144
+&lt;/span>&lt;span class="lnt">145
+&lt;/span>&lt;span class="lnt">146
+&lt;/span>&lt;span class="lnt">147
+&lt;/span>&lt;span class="lnt">148
+&lt;/span>&lt;span class="lnt">149
+&lt;/span>&lt;span class="lnt">150
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 노드 클래스 정의
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">class&lt;/span> &lt;span class="nc">Node&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 데이터 저장
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 다음 노드를 가리키는 포인터
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 생성자
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">data&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">this&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 링크드 리스트 클래스 정의
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">class&lt;/span> &lt;span class="nc">LinkedList&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">private&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 헤드 노드를 가리키는 포인터
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">public&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 생성자 - 빈 리스트로 초기화
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">LinkedList&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">head&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 리스트 끝에 노드 추가
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">newNode&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">head&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">head&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">newNode&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">newNode&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 리스트 시작에 노드 추가
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">prepend&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">newNode&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">newNode&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">head&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">newNode&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 특정 인덱스의 노드 삭제
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">deleteAtIndex&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">index&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">head&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="k">nullptr&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">index&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;인덱스가 유효하지 않습니다.&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 첫 번째 노드를 삭제하는 경우
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">index&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">head&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">delete&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">index&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">temp&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="k">nullptr&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;인덱스가 범위를 초과했습니다.&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 삭제할 노드가 존재하는지 확인
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;인덱스가 범위를 초과했습니다.&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">deleteNode&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">delete&lt;/span> &lt;span class="n">deleteNode&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 특정 값의 노드 삭제
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">deleteValue&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">head&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 헤드 노드를 삭제해야 하는 경우
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">head&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">data&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">head&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">delete&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 중간 노드를 삭제하는 경우
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="k">nullptr&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">data&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 해당 값이 없는 경우
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">deleteNode&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">delete&lt;/span> &lt;span class="n">deleteNode&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 리스트의 크기 계산
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="nf">size&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">count&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">temp&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">count&lt;/span>&lt;span class="o">++&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">count&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 리스트 출력
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">display&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Node&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">head&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">temp&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="k">nullptr&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">data&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34; -&amp;gt; &amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">temp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">-&amp;gt;&lt;/span>&lt;span class="n">next&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;nullptr&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LinkedList&lt;/span> &lt;span class="n">list&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">list&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">list&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">20&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">list&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">30&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">list&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">prepend&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;초기 리스트: &amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">list&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">display&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;리스트 크기: &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">list&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">size&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">list&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">deleteAtIndex&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;인덱스 2의 노드 삭제 후 리스트: &amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">list&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">display&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="s">&amp;#34;리스트 크기: &amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">list&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">size&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="코드-설명">코드 설명
+&lt;/h3>&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Node 클래스&lt;/strong>: Node 클래스는 링크드 리스트의 각 노드를 나타내며, 데이터와 다음 노드를 가리키는 포인터(next)를 포함한다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>LinkedList 클래스&lt;/strong>: LinkedList 클래스는 단방향 링크드 리스트를 나타내며, 노드 추가(append, prepend), 노드 삭제(deleteAtIndex, deleteValue), 리스트 출력(display) 등의 기능을 제공한다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>메인 함수&lt;/strong>: 리스트에 노드를 추가하고, 삭제한 후 리스트를 출력하여 결과를 확인한다.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>단방향 링크드 리스트는 동적 메모리 할당이 필요한 프로그램이나 삽입/삭제가 빈번한 데이터 구조에서 유용하게 활용된다. 공학도로서 링크드 리스트의 핵심 개념을 이해하고, 이러한 자료구조를 구현하는 방법을 익히는 것은 효율적인 메모리 관리와 데이터 구조 설계의 기초가 된다.&lt;/p></description></item><item><title>배열</title><link>https://learngraphics.io/p/data-structure-array/</link><pubDate>Mon, 28 Oct 2024 00:00:00 +0000</pubDate><guid>https://learngraphics.io/p/data-structure-array/</guid><description>&lt;h2 id="배열의-개념과-c에서-배열을-사용하는-방법">배열의 개념과 C++에서 배열을 사용하는 방법
+&lt;/h2>&lt;p>배열은 컴퓨터 프로그래밍에서 가장 기본적이고 중요한 자료구조 중 하나로, 프로그램의 성능을 높이고 데이터를 효율적으로 관리하는 데 필수적인 도구이다.
+프로그래밍에서는 다량의 데이터를 다루는 경우가 빈번하며, 배열을 활용하면 데이터를 빠르고 효율적으로 접근하고 처리할 수 있다.
+이번 글에서는 배열의 개념과 작동 원리, C++에서 배열을 사용하는 방법, 그리고 배열과 포인터를 함께 다루는 방식에 대해 알아본다.&lt;/p>
+&lt;hr>
+&lt;h3 id="배열의-개념과-주요-특징">배열의 개념과 주요 특징
+&lt;/h3>&lt;p>배열은 다음과 같은 주요 특징을 갖는다.&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>연속된 메모리 할당&lt;/strong>: 배열은 모든 요소가 &lt;strong>연속된 메모리 위치&lt;/strong>에 저장된다. 예를 들어, &lt;code>int&lt;/code>형 배열 &lt;code>arr[5]&lt;/code>는 5개의 정수를 저장하기 위해 연속된 20바이트(5 * 4바이트)의 메모리 공간을 할당받는다. 이는 배열의 첫 번째 요소 주소를 기준으로, 각 요소가 데이터 타입 크기만큼 떨어진 주소에 배치됨을 의미한다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>고정된 크기&lt;/strong>: 배열의 크기는 선언 시 정해지며, 실행 중에는 변경할 수 없다. 예를 들어 &lt;code>int arr[5]&lt;/code>는 정수형 데이터를 5개 저장할 수 있는 배열로, 선언 후 크기를 늘리거나 줄일 수 없다. 따라서 배열 선언 시 필요한 크기를 신중하게 결정해야 한다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>인덱스를 통한 빠른 접근&lt;/strong>: 배열은 인덱스를 사용해 각 요소에 접근하며, 인덱스는 0부터 배열 크기 - 1까지의 값을 가진다. 예를 들어, 배열 &lt;code>arr[5]&lt;/code>에서 세 번째 요소에 접근하려면 &lt;code>arr[2]&lt;/code>와 같이 인덱스를 사용할 수 있다. 배열 요소에 접근하는 시간 복잡도는 **O\(1\)**로, 인덱스 접근 방식 덕분에 특정 위치의 데이터를 빠르게 읽고 쓸 수 있다.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h3 id="배열의-작동-원리와-메모리-배치">배열의 작동 원리와 메모리 배치
+&lt;/h3>&lt;p>배열이 선언되면 프로그램은 배열이 필요한 메모리 공간을 확보하며, 배열의 각 요소는 배열의 첫 번째 요소 주소를 기준으로 데이터 타입 크기만큼의 간격을 두고 저장된다. 예를 들어, &lt;code>int&lt;/code>형 배열 &lt;code>arr[5]&lt;/code>는 다음과 같이 메모리에 배치된다.&lt;/p>
+&lt;ol>
+&lt;li>배열의 첫 번째 요소 &lt;code>arr[0]&lt;/code>은 배열의 시작 주소 &lt;code>arr&lt;/code>에 위치한다.&lt;/li>
+&lt;li>배열의 두 번째 요소 &lt;code>arr[1]&lt;/code>은 첫 번째 요소 주소에 &lt;code>sizeof(int)&lt;/code>(4바이트)만큼 떨어진 위치에 저장된다.&lt;/li>
+&lt;li>세 번째 요소 &lt;code>arr[2]&lt;/code>는 시작 주소에 &lt;code>2 * sizeof(int)&lt;/code>만큼 떨어진 곳에 저장되는 식으로, 각 요소는 데이터 타입 크기만큼의 메모리 오프셋을 두고 연속적으로 배치된다.&lt;/li>
+&lt;/ol>
+&lt;p>이와 같은 배열의 메모리 배치 덕분에, 배열의 &lt;code>i&lt;/code>번째 요소에 접근할 때 배열의 시작 주소 &lt;code>arr&lt;/code>에 &lt;code>i * 데이터 타입 크기&lt;/code>를 더하여 해당 메모리 위치에 빠르게 접근할 수 있다. 이는 포인터와 유사한 방식으로, 배열 &lt;code>arr[i]&lt;/code>는 내부적으로 &lt;code>*(arr + i)&lt;/code>와 동일하게 동작한다.&lt;/p>
+&lt;p>배열의 이러한 메모리 배치와 작동 방식은 특정 위치의 데이터를 빠르게 검색하고 수정하는 데 매우 유리하다. 하지만 크기가 고정되어 있어, 실행 중에는 데이터를 삽입하거나 삭제하는 데 비효율적일 수 있다. 이러한 특성으로 인해 배열은 빠른 데이터 접근이 필요한 상황에 적합한 자료구조로 사용된다.&lt;/p>
+&lt;hr>
+&lt;h3 id="c에서-배열-사용-방법">C++에서 배열 사용 방법
+&lt;/h3>&lt;p>C++에서는 배열을 선언할 때 배열의 크기와 데이터 타입을 명시해야 한다. 배열 선언과 초기화는 다음과 같이 이루어진다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 배열 선언 및 초기화
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">arr&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="p">};&lt;/span> &lt;span class="c1">// 크기가 5인 정수 배열 선언과 초기화
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 배열 요소에 접근
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">arr&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">];&lt;/span> &lt;span class="c1">// 첫 번째 요소 출력 (결과: 1)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">arr&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">10&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 세 번째 요소에 10을 할당
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>C++에서는 배열의 크기를 명시하지 않고 초기화 값만으로 배열을 선언할 수도 있다. 컴파일러가 초기화 값에 맞춰 배열 크기를 자동으로 설정한다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="n">arr&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="p">};&lt;/span> &lt;span class="c1">// 컴파일러가 크기를 5로 설정
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>이 외에도, 배열의 크기를 sizeof 연산자를 통해 계산할 수 있으며, 이를 활용해 배열의 전체 크기를 알아낼 수 있다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="n">size&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">arr&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="k">sizeof&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">arr&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]);&lt;/span> &lt;span class="c1">// 전체 크기 계산
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h3 id="배열과-포인터의-관계">배열과 포인터의 관계
+&lt;/h3>&lt;p>배열은 메모리에서 연속적으로 배치되기 때문에 포인터와 유사한 특성을 가진다. C++에서 배열의 이름은 배열의 첫 번째 요소의 주소를 나타내며, 배열을 포인터처럼 다룰 수 있다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="n">arr&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">ptr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">arr&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// 배열의 첫 번째 요소 주소를 포인터 ptr에 할당
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ptr&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// 세 번째 요소(3)를 출력
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>포인터를 사용하여 배열 요소에 접근할 때는 *(ptr + i) 형태로 포인터 연산을 활용할 수 있으며, 이는 배열 인덱스 접근 방식과 동일하게 작동한다. 포인터와 배열의 이러한 관계를 이해하면 함수에 배열을 포인터로 전달하여 메모리 사용을 최적화할 수 있다.&lt;/p>
+&lt;hr>
+&lt;h3 id="다차원-배열">다차원 배열
+&lt;/h3>&lt;p>배열은 다차원으로도 확장할 수 있으며, 특히 2차원 배열은 행과 열로 구성된 데이터 구조를 나타내기 때문에 행렬 또는 테이블 데이터를 저장하는 데 유용하다. 예를 들어, int matrix[3][3]는 3x3 크기의 정수형 2차원 배열로, 3행 3열의 데이터를 저장할 수 있다.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="n">matrix&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{{&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">},&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">6&lt;/span>&lt;span class="p">}};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">matrix&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">];&lt;/span> &lt;span class="c1">// 두 번째 행, 세 번째 열 요소(6)를 출력
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>2차원 배열은 배열의 배열로 볼 수 있으며, 포인터를 통해 다차원 배열의 요소에 접근할 수 있다. 이러한 다차원 배열은 이미지 데이터나 행렬 계산과 같은 작업에서 효과적으로 사용된다.&lt;/p>
+&lt;hr>
+&lt;h3 id="배열의-장점과-한계">배열의 장점과 한계
+&lt;/h3>&lt;p>배열은 다음과 같은 장점을 가진다.&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>빠른 접근 속도&lt;/strong>: 배열 인덱스를 통해 특정 위치의 데이터를 O(1) 시간 복잡도로 빠르게 읽고 쓸 수 있다.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>간결한 코드 구조&lt;/strong>: 배열을 통해 동일한 데이터 타입의 여러 값을 일괄적으로 관리할 수 있으며, 반복문과의 조합을 통해 데이터를 쉽게 처리할 수 있다.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>그러나 배열은 고정된 크기를 가지고 있기 때문에 데이터를 삽입하거나 삭제하는 데 어려움이 있으며, 이로 인해 많은 데이터의 동적 관리를 필요로 하는 경우에는 연결 리스트와 같은 자료구조가 더 적합할 수 있다. 배열과 포인터의 관계를 이해하면, 메모리를 효과적으로 관리하고, 더 나아가 효율적인 코드 작성이 가능해진다.&lt;/p>
+&lt;p>배열은 프로그래밍의 기초이자 필수적인 자료구조로, 메모리와 효율적인 접근 방식을 이해하는 데 중요한 역할을 한다. 공학도로서 배열의 작동 원리와 사용 방식을 충분히 익혀 효율적인 프로그래밍을 실현하는 것이 중요하다.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;a class="link" href="https://learngraphics.io/p/data-structure-memory-layout/" target="_blank" rel="noopener"
+>이전글: 메모리 레이아웃&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>&lt;a class="link" href="https://learngraphics.io/p/data-structure-singly-linked-list/" target="_blank" rel="noopener"
+>다음글: 단방향 링크드 리스트&lt;/a>&lt;/p>
+&lt;/blockquote></description></item><item><title>메모리 레이아웃</title><link>https://learngraphics.io/p/data-structure-memory-layout/</link><pubDate>Sun, 27 Oct 2024 00:00:00 +0000</pubDate><guid>https://learngraphics.io/p/data-structure-memory-layout/</guid><description>&lt;h2 id="프로그램의-메모리-레이아웃과-그-중요성">프로그램의 메모리 레이아웃과 그 중요성
+&lt;/h2>&lt;p>프로그램이 실행될 때 메모리 상에 데이터가 어떻게 배치되는지에 대한 이해는 컴퓨터 공학에서 중요한 개념이다.
+C++ 프로그램이 실행될 때, 메모리는 여러 영역으로 나뉘며, 각 영역은 특정한 목적과 역할을 가진다.
+이러한 메모리 레이아웃을 통해 프로그램의 성능을 최적화하고, 메모리를 효율적으로 관리할 수 있다.
+이번 글에서는 메모리 레이아웃의 구성 요소와 그 작동 방식을 설명한다.&lt;/p>
+&lt;hr>
+&lt;h2 id="메모리-레이아웃의-구성-요소와-역할">메모리 레이아웃의 구성 요소와 역할
+&lt;/h2>&lt;h3 id="코드-영역-code-segment-또는-text-segment">코드 영역 (Code Segment 또는 Text Segment)
+&lt;/h3>&lt;p>코드 영역은 실행할 프로그램의 **코드\(명령어\)**가 저장되는 메모리 공간이다.
+이 영역에는 컴파일러가 생성한 실행 가능한 기계 코드가 위치하며, 프로그램이 실행되는 동안 &lt;strong>읽기 전용&lt;/strong>으로 설정되어 수정할 수 없다.
+이로 인해 프로그램이 무결성을 유지할 수 있으며, 예기치 않은 수정으로 인한 에러 발생을 방지할 수 있다.
+코드 영역의 명령어는 CPU에 의해 순차적으로 실행되거나 특정 위치로 점프하는 제어 흐름이 발생하며, 프로그램의 전체적인 논리 흐름을 담당한다.&lt;/p>
+&lt;h3 id="데이터-영역-data-segment">데이터 영역 (Data Segment)
+&lt;/h3>&lt;p>데이터 영역은 프로그램의 &lt;strong>전역 변수&lt;/strong>와 &lt;strong>정적 변수&lt;/strong>가 저장되는 공간이다.
+데이터 영역은 두 가지 하위 영역으로 나뉘며, &lt;strong>초기화된 데이터 영역&lt;/strong>과 **초기화되지 않은 데이터 영역\(BSS\)**로 구분된다.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>초기화된 데이터 영역&lt;/strong>은 초기값이 명시된 전역 변수와 정적 변수를 저장하며, 프로그램이 시작할 때 이 값들이 할당된다.&lt;/li>
+&lt;li>**초기화되지 않은 데이터 영역\(BSS\)**에는 초기값이 명시되지 않은 전역 변수와 정적 변수가 위치하며, 프로그램 시작 시 자동으로 0으로 초기화된다.&lt;/li>
+&lt;/ul>
+&lt;p>이 두 하위 영역 덕분에 프로그램은 필요한 전역 변수를 효과적으로 관리할 수 있으며, 초기화 여부에 따라 메모리를 구분하여 사용한다.&lt;/p>
+&lt;h3 id="힙-영역-heap-segment">힙 영역 (Heap Segment)
+&lt;/h3>&lt;p>힙 영역은 &lt;strong>동적 메모리 할당&lt;/strong>이 이루어지는 메모리 공간이다. 이 영역은 프로그램 실행 중 필요에 따라 메모리를 할당하고 해제할 수 있도록 지원한다.
+C++에서는 &lt;code>new&lt;/code>와 &lt;code>delete&lt;/code> 연산자를 사용하여 힙에 동적 메모리를 할당하거나 해제할 수 있으며,
+C 언어에서는 &lt;code>malloc&lt;/code>과 &lt;code>free&lt;/code> 함수를 사용하여 동적 메모리를 관리한다.&lt;/p>
+&lt;p>힙 영역은 주로 런타임에 크기가 결정되는 큰 데이터 구조(예: 동적 배열, 연결 리스트 등)를 저장할 때 사용되며, 할당과 해제를 명시적으로 관리해야 한다.
+만약 사용 후에 메모리를 해제하지 않으면 &lt;strong>메모리 누수&lt;/strong>가 발생할 수 있으며, 이는 프로그램의 성능과 안정성에 부정적인 영향을 미칠 수 있다.&lt;/p>
+&lt;h3 id="스택-영역-stack-segment">스택 영역 (Stack Segment)
+&lt;/h3>&lt;p>스택 영역은 &lt;strong>함수 호출&lt;/strong>과 관련된 지역 변수, 매개변수, 그리고 함수의 반환 주소를 저장하는 공간이다.
+함수가 호출될 때마다 스택에 **스택 프레임\(Stack Frame\)**이 생성되며, 함수 호출이 완료되면 해당 프레임이 스택에서 제거된다.
+스택은 LIFO(Last In, First Out) 원칙에 따라 작동하며, 자동으로 메모리 할당과 해제가 이루어진다.&lt;/p>
+&lt;p>스택은 재귀 호출이나 깊은 함수 호출이 많은 경우 **스택 오버플로\(Stack Overflow\)**를 일으킬 수 있으므로 사용에 주의가 필요하다.
+반면, 메모리 누수 위험이 적고 지역 변수를 효율적으로 관리할 수 있어, 함수 내부에서 사용하는 임시 데이터 저장에 매우 유용하다.&lt;/p>
+&lt;hr>
+&lt;h2 id="메모리-레이아웃-요약">메모리 레이아웃 요약
+&lt;/h2>&lt;p>C++ 프로그램의 메모리 구조는 다음과 같이 요약할 수 있다.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>메모리 영역&lt;/th>
+&lt;th>역할&lt;/th>
+&lt;th>특징&lt;/th>
+&lt;th>사용 예시&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>코드 영역&lt;/strong>&lt;/td>
+&lt;td>실행할 코드(명령어) 저장&lt;/td>
+&lt;td>읽기 전용, 수정 불가&lt;/td>
+&lt;td>함수, 루프, 제어문이 실행되는 코드 부분&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>데이터 영역&lt;/strong>&lt;/td>
+&lt;td>초기화된/초기화되지 않은 전역 및 정적 변수&lt;/td>
+&lt;td>프로그램 시작 시 메모리에 위치, 값 유지&lt;/td>
+&lt;td>초기화된 전역 변수 &lt;code>int a = 10;&lt;/code>, 초기화 안된 전역 변수 &lt;code>int b;&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>힙 영역&lt;/strong>&lt;/td>
+&lt;td>동적 메모리 할당&lt;/td>
+&lt;td>사용자 요청에 의해 크기와 할당 조절 가능, 명시적 해제 필요&lt;/td>
+&lt;td>런타임에 크기가 결정되는 배열이나 객체&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>스택 영역&lt;/strong>&lt;/td>
+&lt;td>함수 호출 시 지역 변수, 매개변수, 반환 주소 저장&lt;/td>
+&lt;td>자동으로 메모리 할당과 해제, LIFO 방식&lt;/td>
+&lt;td>함수 호출 시 &lt;code>int x = 5;&lt;/code> 같은 지역 변수&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;p>메모리 레이아웃은 프로그램의 성능과 안정성을 높이기 위한 필수적인 개념이다.
+프로그램이 사용하는 메모리 영역을 정확히 이해하고 관리함으로써 효율적인 메모리 사용을 실현할 수 있으며,
+이는 공학도로서 실무에서 유용하게 적용할 수 있는 기초적인 능력이다.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;a class="link" href="https://learngraphics.io/p/data-structure-intro/" target="_blank" rel="noopener"
+>이전글: 자료구조&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>&lt;a class="link" href="https://learngraphics.io/p/data-structure-array/" target="_blank" rel="noopener"
+>다음글: 배열&lt;/a>&lt;/p>
+&lt;/blockquote></description></item><item><title>자료구조</title><link>https://learngraphics.io/p/data-structure-intro/</link><pubDate>Sat, 26 Oct 2024 00:00:00 +0000</pubDate><guid>https://learngraphics.io/p/data-structure-intro/</guid><description>&lt;h2 id="왜-필요하며-무엇을-배워야-하는가">왜 필요하며 무엇을 배워야 하는가
+&lt;/h2>&lt;p>자료구조는 컴퓨터 공학에서 가장 기본적이면서도 중요한 개념 중 하나이다.
+이는 데이터를 효율적으로 저장하고, 조직하며, 관리하기 위한 체계를 의미한다.
+프로그램의 성능을 최적화하고, 메모리를 효과적으로 사용하기 위해서는 올바른 자료구조를 선택하는 것이 필수적이다.
+자료구조는 단순히 데이터를 담아두는 역할에 그치지 않으며, 데이터를 효율적으로 다루고 빠르게 처리할 수 있도록 돕는 도구이다.
+따라서 공학도로서 자료구조를 깊이 이해하고 활용할 수 있는 능력을 갖추는 것은 매우 중요하다.&lt;/p>
+&lt;p>자료구조를 학습하는 이유는 크게 &lt;strong>효율성 향상&lt;/strong>과 &lt;strong>문제 해결 능력 강화&lt;/strong>로 요약할 수 있다.
+먼저, 자료구조를 잘 활용하면 동일한 작업을 수행하는 데 걸리는 시간과 메모리를 줄일 수 있다.
+예를 들어, 배열은 특정 인덱스의 요소에 빠르게 접근할 수 있지만, 크기가 고정되어 있어 데이터 삽입과 삭제가 어렵다.
+반면, 연결 리스트는 데이터 삽입과 삭제가 용이하지만, 특정 위치에 접근하는 속도는 배열보다 느리다.
+자료구조의 특성을 이해하고, 특정 상황에서 가장 적합한 자료구조를 선택하면 프로그램 성능을 크게 향상시킬 수 있다.&lt;/p>
+&lt;p>또한, 자료구조는 문제 해결 과정에서 매우 유용한 도구가 된다.
+복잡한 문제를 해결할 때 자료구조를 적절하게 활용하면 문제를 쉽게 분해하고 효율적으로 풀 수 있다.
+예를 들어, 그래프 자료구조는 소셜 네트워크나 경로 탐색과 같은 복잡한 관계를 다룰 때 효과적이다.
+자료구조는 이렇게 특정 문제를 해결하기 위한 최적의 접근 방식을 제시해주며, 다양한 문제 상황에서 요구되는 &lt;strong>추상적 사고 능력&lt;/strong>을 키워준다.
+이는 복잡한 문제를 단순화해 해결하는 능력을 길러주며, 공학자로서의 중요한 역량을 기를 수 있게 해준다.&lt;/p>
+&lt;p>실제 산업에서도 자료구조의 중요성은 크다.
+소프트웨어 개발, 데이터 분석, 머신러닝 등에서 대규모 데이터를 효율적으로 관리해야 하며, 이를 위해 자료구조를 활용하는 것은 필수적이다.
+예를 들어, 데이터베이스에서 해시 테이블을 통해 데이터를 신속하게 검색하거나,
+파일 시스템에서 트리 구조를 통해 데이터를 계층적으로 관리하는 등 다양한 실무 상황에서 자료구조는 중요한 역할을 한다.
+따라서 자료구조를 공부함으로써 효율적인 프로그램 설계와 최적화를 위한 기본기를 다질 수 있다.&lt;/p>
+&lt;hr>
+&lt;h2 id="주요-자료구조-개요">주요 자료구조 개요
+&lt;/h2>&lt;p>C++에서 자료구조는 다양한 형태로 구현되며, 각 자료구조는 고유한 특성과 활용 목적을 가진다.
+아래는 주로 사용되는 자료구조와 그 특징에 대한 간단한 개요이다.&lt;/p>
+&lt;h3 id="1-배열-array">1. 배열 (Array)
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>정의&lt;/strong>: 정해진 크기의 연속된 메모리 공간에 데이터를 저장하는 구조이다.&lt;/li>
+&lt;li>&lt;strong>특징&lt;/strong>: 인덱스를 사용하여 각 요소에 빠르게 접근할 수 있지만, 크기가 고정되어 있어 요소의 삽입과 삭제가 비효율적이다.&lt;/li>
+&lt;li>&lt;strong>활용&lt;/strong>: 정렬이 필요하거나, 크기가 일정한 데이터 집합을 다룰 때 유용하다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-연결-리스트-linked-list">2. 연결 리스트 (Linked List)
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>정의&lt;/strong>: 각 노드가 데이터와 다음 노드를 가리키는 포인터를 포함하는 구조로, 데이터의 삽입과 삭제가 용이하다.&lt;/li>
+&lt;li>&lt;strong>특징&lt;/strong>: 특정 요소에 접근하려면 처음부터 순차적으로 탐색해야 하므로 배열보다 접근 속도는 느리다.&lt;/li>
+&lt;li>&lt;strong>활용&lt;/strong>: 자주 삽입과 삭제가 발생하는 데이터를 관리할 때 유리하다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-스택-stack">3. 스택 (Stack)
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>정의&lt;/strong>: LIFO(Last In, First Out) 원칙을 따르는 자료구조이다.&lt;/li>
+&lt;li>&lt;strong>특징&lt;/strong>: 가장 최근에 삽입된 요소가 가장 먼저 제거된다.&lt;/li>
+&lt;li>&lt;strong>활용&lt;/strong>: 함수 호출 기록, 되돌리기 기능(Undo), 재귀 알고리즘 구현 등에 사용된다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-큐-queue">4. 큐 (Queue)
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>정의&lt;/strong>: FIFO(First In, First Out) 원칙을 따르는 자료구조이다.&lt;/li>
+&lt;li>&lt;strong>특징&lt;/strong>: 가장 먼저 삽입된 요소가 가장 먼저 제거된다.&lt;/li>
+&lt;li>&lt;strong>활용&lt;/strong>: 작업 대기열, 프린터 작업 관리 등에서 사용된다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="5-트리-tree">5. 트리 (Tree)
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>정의&lt;/strong>: 계층적 구조를 표현하는 자료구조로, 부모-자식 관계를 통해 데이터를 조직화한다.&lt;/li>
+&lt;li>&lt;strong>특징&lt;/strong>: 검색과 정렬이 빠르며, 계층적 데이터 구조를 다루는 데 유용하다.&lt;/li>
+&lt;li>&lt;strong>활용&lt;/strong>: 파일 시스템, 데이터베이스 인덱스 등에서 자주 사용된다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="6-그래프-graph">6. 그래프 (Graph)
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>정의&lt;/strong>: 노드와 노드 사이의 관계를 나타내는 간선으로 구성된 자료구조이다.&lt;/li>
+&lt;li>&lt;strong>특징&lt;/strong>: 다양한 관계나 네트워크 구조를 나타내는 데 적합하다.&lt;/li>
+&lt;li>&lt;strong>활용&lt;/strong>: 소셜 네트워크, 지도 경로 탐색, 네트워크 구조 분석 등에서 사용된다.&lt;/li>
+&lt;/ul>
+&lt;h3 id="7-해시-테이블-hash-table">7. 해시 테이블 (Hash Table)
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>정의&lt;/strong>: 키-값 쌍을 저장하며, 해시 함수를 통해 데이터 접근을 빠르게 하는 자료구조이다.&lt;/li>
+&lt;li>&lt;strong>특징&lt;/strong>: 빠른 검색이 가능하지만, 해시 충돌을 처리해야 한다.&lt;/li>
+&lt;li>&lt;strong>활용&lt;/strong>: 데이터베이스 인덱싱, 캐싱 시스템 등에서 자주 사용된다.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>이와 같이 자료구조는 프로그램의 성능을 결정짓는 핵심 요소이며, 상황에 따라 가장 적합한 자료구조를 선택하는 것이 중요하다.
+자료구조의 각 특성을 이해하고, C++ 언어를 통해 이를 구현하는 능력은 공학도로서 실무에서 요구되는 중요한 역량이다.
+자료구조를 공부함으로써 코딩 능력과 문제 해결 능력을 함께 향상시킬 수 있으며, 이를 통해 효율적인 프로그램을 작성하는 데 필요한 기초를 다질 수 있다.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;a class="link" href="https://learngraphics.io/p/data-structure-memory-layout/" target="_blank" rel="noopener"
+>다음글: 자료구조: 메모리 레이아웃&lt;/a>&lt;/p>
+&lt;/blockquote></description></item></channel></rss>
