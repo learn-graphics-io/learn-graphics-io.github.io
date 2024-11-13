@@ -2,7 +2,7 @@
 title: 메모리 레이아웃
 description: 자료구조의 기초 이론을 학습합니다
 slug: data-structure-memory-layout
-date: 2024-11-13
+date: 2024-10-27
 categories:
   - data_structure
 tags: 

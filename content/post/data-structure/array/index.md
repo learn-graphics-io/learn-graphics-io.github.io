@@ -2,7 +2,7 @@
 title: 배열
 description: 자료구조의 기초 이론을 학습합니다
 slug: data-structure-array
-date: 2024-11-13
+date: 2024-10-28
 categories:
   - data_structure
 tags: 
@@ -111,4 +111,4 @@ cout << matrix[1][2];  // 두 번째 행, 세 번째 열 요소(6)를 출력
 
 > [이전글: 메모리 레이아웃](https://learngraphics.io/p/data-structure-memory-layout/)
 
-> [다음글: 링크드 리스트](https://learngraphics.io/p/data-structure-linked-list/)
+> [다음글: 단방향 링크드 리스트](https://learngraphics.io/p/data-structure-singly-linked-list/)

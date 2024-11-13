@@ -2,7 +2,7 @@
 title: 자료구조
 description: 자료구조의 기초 이론을 학습합니다
 slug: data-structure-intro
-date: 2024-11-13
+date: 2024-10-26
 categories:
   - data_structure
 tags: 
